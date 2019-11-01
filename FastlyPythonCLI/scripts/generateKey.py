@@ -8,7 +8,7 @@ import requests
 
 
 def generateKey():
-    print('Generating key...')
+    print(bcolors.OKBLUE + 'Generating key...' + bcolors.ENDC)
     username = input("Username: ")
     password = getpass()
     OTP = input("OTP [leave blank if OTP is not enabled]: ")

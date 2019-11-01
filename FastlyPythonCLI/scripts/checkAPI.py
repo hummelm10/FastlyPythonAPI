@@ -5,9 +5,13 @@ from .utils import clear
 from .utils import getKeyFromConfig
 from .utils import bcolors
 import requests
-
+import os.path
+from os import path
 
 def checkAPI():
+    if path.exists("Config.xml") == False:
+        print(bcolors.FAIL + "Config.xml file is missing. Exiting Application." + bcolors.ENDC)
+        exit()
     print('Getting current API key information...')
     print(bcolors.OKBLUE + "API Key: " + bcolors.ENDC + getKeyFromConfig())
     header={"Accept":"application/json"}

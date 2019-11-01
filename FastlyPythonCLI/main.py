@@ -2,15 +2,30 @@
 from os import system, name
 import scripts
 import requests
+import shutil
+import time
 
 #global variables here
 flag = True #loop control
 
+columns = shutil.get_terminal_size().columns
+
 if __name__ == "__main__":
     scripts.clear()
-    print(scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'WELCOME TO THE FASTLY CLI' \
-        + scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
-    print('This program will give you basic API controls for Fastly. Checking if saved API Key is valid...')
+    print(('     ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'WELCOME TO THE FASTLY CLI' \
+        + scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "     ______           __  __         ________    ____" + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "    / ____/___ ______/ /_/ /_  __   / ____/ /   /  _/" + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "   / /_  / __ `/ ___/ __/ / / / /  / /   / /    / /  " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "  / __/ / /_/ (__  ) /_/ / /_/ /  / /___/ /____/ /   " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + " /_/    \__,_/____/\__/_/\__, /   \____/_____/___/   " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "                        /____/                       " + scripts.bcolors.ENDC).center(columns))
+
+
+    print('This program will give you basic API controls for Fastly.') 
+    time.sleep(3)
+    scripts.clear()
+    print('Checking if saved API Key is valid...')
     scripts.checkAPI()
     while flag == True:
         scripts.clear()
