@@ -14,4 +14,4 @@ DETAILED DESCRIPTION
     This is a rudimentary module that allows querying for arbitrary Fastly API objects.
 
 SETUP
-    Edit Config.xml with your API key and tenant name. 
+    Rename Config-README.xml to Config.xml and make sure it is in the same folder as main.py or FastlyCLI.exe
