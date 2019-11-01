@@ -1,0 +1,17 @@
+PSTOPIC
+    about_FastlyPythonCLI
+
+SHORT DESCRIPTION
+    FastlyPythonCLI allows you to work with the SentinelOne API through PowerShell functions
+
+LONG DESCRIPTION
+    FastlyPythonCLI allows you to work with the SentinelOne API through PowerShell functions
+
+    You can find API documentation here:
+        https://docs.fastly.com/api/
+
+DETAILED DESCRIPTION
+    This is a rudimentary module that allows querying for arbitrary Fastly API objects.
+
+SETUP
+    Edit Config.xml with your API key and tenant name. 
