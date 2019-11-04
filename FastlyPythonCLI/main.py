@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print((scripts.bcolors.OKGREEN + "                        /____/                       " + scripts.bcolors.ENDC).center(columns))
 
 
-    print('This program will give you basic API controls for Fastly.') 
+    print(('This program will give you basic API controls for Fastly.').center(columns))
     time.sleep(3)
     scripts.clear()
     print('Checking if saved API Key is valid...')
