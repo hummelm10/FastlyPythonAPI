@@ -4,6 +4,7 @@ from .utils import clear
 from .utils import getKeyFromConfig
 from .utils import bcolors
 import requests
+import pprint
 
 
 def getAllTokens():
@@ -18,7 +19,7 @@ def getAllTokens():
         input('Press ENTER to continue...')
         clear()
     elif r.status_code == 200:
-        print(r.json())
+        pprint.pprint(r.json())
         input("Press ENTER to continue...")
     else:
         print(bcolors.WARNING + "Unknown Response: " + r.status_code + bcolors.ENDC)

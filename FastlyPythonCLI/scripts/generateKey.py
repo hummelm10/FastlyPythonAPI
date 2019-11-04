@@ -29,7 +29,8 @@ def generateKey():
         clear()
         # generateKey()
     elif r.status_code == 200:
-        accessToken = r.json()['detail']
+        # print(r.json()['access_token'])
+        accessToken = r.json()['access_token']
         configXML = minidom.parse('Config.xml')
         items = configXML.getElementsByTagName('item')
         items[0].childNodes[0].data = accessToken
