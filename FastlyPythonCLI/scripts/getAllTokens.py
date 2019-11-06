@@ -1,10 +1,17 @@
-from xml.dom import minidom
+#custom
 from .generateKey import generateKey
 from .utils import clear
 from .utils import getKeyFromConfig
+
+#custom classes
 from .utils import bcolors
+from .utils import DataFrameFromDict
+
+#Python packages
+from xml.dom import minidom
 import requests
-import pprint
+import pandas
+from pandas.io.json import json_normalize
 
 
 def getAllTokens():
@@ -19,7 +26,16 @@ def getAllTokens():
         input('Press ENTER to continue...')
         clear()
     elif r.status_code == 200:
-        pprint.pprint(r.json())
+        with DataFrameFromDict(r.json()) as df:
+            df['ID'] = df['id']
+            df['User ID'] = df['user_id']
+            df['Customer ID'] = df['customer_id']
+            df['Name'] = df['name']
+            df['Scope'] = df['scope']
+            df['Last Used At'] = df['last_used_at']
+            df['Expiration'] = df['expires_at']
+            df['IP'] = df['ip']
+        print(df)
         input("Press ENTER to continue...")
     else:
         print(bcolors.WARNING + "Unknown Response: " + r.status_code + bcolors.ENDC)

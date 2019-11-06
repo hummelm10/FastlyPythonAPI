@@ -1,25 +1,33 @@
 #import statments here
 from os import system, name
-import scripts
 import requests
 import shutil
 import time
+import signal
 
-#global variables here
+#import custom 
+import scripts
+
+#definitions
+def handler(signum, frame):
+    print('Signal interrupt detected with signal (Ctrl-C): ', signum)
+    exit()
+
+#variables 
 flag = True #loop control
-
 columns = shutil.get_terminal_size().columns
+signal.signal(signal.SIGINT, handler)
 
 if __name__ == "__main__":
     scripts.clear()
     print(('     ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'WELCOME TO THE FASTLY CLI' \
         + scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + "     ______           __  __         ________    ____" + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + "    / ____/___ ______/ /_/ /_  __   / ____/ /   /  _/" + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + "   / /_  / __ `/ ___/ __/ / / / /  / /   / /    / /  " + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + "  / __/ / /_/ (__  ) /_/ / /_/ /  / /___/ /____/ /   " + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + " /_/    \__,_/____/\__/_/\__, /   \____/_____/___/   " + scripts.bcolors.ENDC).center(columns))
-    print((scripts.bcolors.OKGREEN + "                        /____/                       " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "      ______           __  __         ________    ____ " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "     / ____/___ ______/ /_/ /_  __   / ____/ /   /  _/ " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "    / /_  / __ `/ ___/ __/ / / / /  / /   / /    / /   " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "   / __/ / /_/ (__  ) /_/ / /_/ /  / /___/ /____/ /    " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "  /_/    \__,_/____/\__/_/\__, /   \____/_____/___/    " + scripts.bcolors.ENDC).center(columns))
+    print((scripts.bcolors.OKGREEN + "                         /____/                        " + scripts.bcolors.ENDC).center(columns))
 
 
     print(('This program will give you basic API controls for Fastly.').center(columns))
@@ -36,8 +44,9 @@ if __name__ == "__main__":
         print('1: Check API Key')
         print('2: Login/Generate API Key')
         print('3: List all active API Keys')
-        print('4: WAF')
-        print('5: CDN')
+        print('4: List all Services')
+        print('5: WAF')
+        print('6: CDN')
         print('Q to quit')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
@@ -54,8 +63,11 @@ if __name__ == "__main__":
             scripts.getAllTokens()
         elif choice == '4':
             scripts.clear()
-            input("NO WAF OPTIONS YET")
+            scripts.listServices()
         elif choice == '5':
+            scripts.clear()
+            input("NO WAF OPTIONS YET")
+        elif choice == '6':
             scripts.clear()
             scripts.CDNMenu()
         elif choice == 'Q' or choice == 'q':
