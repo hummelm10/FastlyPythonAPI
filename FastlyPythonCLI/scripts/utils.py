@@ -61,3 +61,22 @@ def listServices():
     else:
         input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)
 
+def listServicesNoPrint():
+    if scripts.checkAPINoPrint():
+        header={"Accept":"application/json"}
+        header.update({"Fastly-Key":scripts.getKeyFromConfig()})
+        r=requests.get("https://api.fastly.com/services",headers=header)
+        if r.status_code == 401:
+            return None
+        elif r.status_code == 200:
+            services = r.json()['data']
+            with DataFrameFromDict(services) as df:
+                df['ID'] = df['id']
+                df['Name'] = df['attributes.name']
+                df['Version'] = df['attributes.active_version']
+            return df
+        else:
+            return None
+    else:
+        return None
+

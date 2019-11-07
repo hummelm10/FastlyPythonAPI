@@ -5,3 +5,4 @@ from .utils import *
 from .CDNUtil import *
 from .WAFUtil import *
 import scripts.CDN
+import scripts.WAF

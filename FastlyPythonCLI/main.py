@@ -66,7 +66,7 @@ if __name__ == "__main__":
             scripts.listServices()
         elif choice == '5':
             scripts.clear()
-            input("NO WAF OPTIONS YET")
+            scripts.WAFMenu()
         elif choice == '6':
             scripts.clear()
             scripts.CDNMenu()
