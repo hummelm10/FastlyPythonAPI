@@ -4,6 +4,7 @@ import scripts
 import requests
 import pandas
 from pandas.io.json import json_normalize
+import pprint
 
 class DataFrameFromDict(object):
     def __init__(self, data):
@@ -45,19 +46,32 @@ def listServices():
     if scripts.checkAPINoPrint():
         header={"Accept":"application/json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
-        r=requests.get("https://api.fastly.com/services",headers=header)
+        r=requests.get("https://api.fastly.com/service",headers=header)
         if r.status_code == 401:
-            input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
         elif r.status_code == 200:
-            services = r.json()['data']
+            services = r.json()
             with DataFrameFromDict(services) as df:
                 df['ID'] = df['id']
-                df['Name'] = df['attributes.name']
-                df['Version'] = df['attributes.active_version']
+                df['Name'] = df['name']
+                df['Version'] = df['version']
+            df.insert(3, 'Domain(s)', None)
+            # print(df)
+            for x in range(len(df.index)):
+                if not df['Version'].isnull().iloc[x]:
+                    id = str(df['ID'].iloc[x])
+                    # print("https://api.fastly.com/service/" + id + "/domain")
+                    r2=requests.get("https://api.fastly.com/service/" + id + "/domain",headers=header)
+                    # pprint.pprint(r2.json())
+                    returns=json_normalize(r2.json())
+                    if r2.json():
+                        returnlist = returns['name'].tolist()
+                        df.at[x,'Domain(s)'] =", ".join(returnlist)
+            pandas.set_option('display.max_colwidth', -1)
             print(df)
             input("Press ENTER to continue...")
         else:
-            input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
     else:
         input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)
 
@@ -65,18 +79,30 @@ def listServicesNoPrint():
     if scripts.checkAPINoPrint():
         header={"Accept":"application/json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
-        r=requests.get("https://api.fastly.com/services",headers=header)
+        r=requests.get("https://api.fastly.com/service",headers=header)
         if r.status_code == 401:
-            return None
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
         elif r.status_code == 200:
-            services = r.json()['data']
+            services = r.json()
             with DataFrameFromDict(services) as df:
                 df['ID'] = df['id']
-                df['Name'] = df['attributes.name']
-                df['Version'] = df['attributes.active_version']
+                df['Name'] = df['name']
+                df['Version'] = df['version']
+            df.insert(3, 'Domain(s)', None)
+            # print(df)
+            for x in range(len(df.index)):
+                if not df['Version'].isnull().iloc[x]:
+                    id = str(df['ID'].iloc[x])
+                    # print("https://api.fastly.com/service/" + id + "/domain")
+                    r2=requests.get("https://api.fastly.com/service/" + id + "/domain",headers=header)
+                    # pprint.pprint(r2.json())
+                    returns=json_normalize(r2.json())
+                    if r2.json():
+                        returnlist = returns['name'].tolist()
+                        df.at[x,'Domain(s)'] =", ".join(returnlist)
+            pandas.set_option('display.max_colwidth', -1)
             return df
         else:
-            return None
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
     else:
-        return None
-
+        input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)

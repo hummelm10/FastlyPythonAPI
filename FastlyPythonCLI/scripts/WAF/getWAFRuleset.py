@@ -23,7 +23,10 @@ def getWAFRuleset():
         # input("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/ruleset")
         r=requests.get("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rule_statuses",headers=header)
         if r.status_code == 401:
-            input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
+        elif r.status_code == 404:
+            # * no waf for that service
+            pass
         elif r.status_code == 200:
             with scripts.utils.DataFrameFromDict(r.json()['data']) as df:
                 df['ID'] = df['attributes.unique_rule_id']
@@ -41,6 +44,6 @@ def getWAFRuleset():
             print(df)
             input("Press ENTER to continue...")
         else:
-            input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
     else:
         input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)

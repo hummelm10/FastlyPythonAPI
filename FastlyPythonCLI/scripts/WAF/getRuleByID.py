@@ -11,7 +11,7 @@ def getRuleByID(ruleid):
     header.update({"Fastly-Key":scripts.getKeyFromConfig()})
     r=requests.get("https://api.fastly.com/wafs/rules/" + ruleid,headers=header)
     if r.status_code == 401:
-        input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+        input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
     elif r.status_code == 200:
         with scripts.utils.DataFrameFromDict(r.json()['data']) as df:
             df['ID'] = df['id']
@@ -21,4 +21,4 @@ def getRuleByID(ruleid):
         # print(df)
         return df
     else:
-        input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
+        input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
