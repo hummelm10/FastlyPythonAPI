@@ -11,6 +11,7 @@ def generateKey():
     print(bcolors.OKBLUE + 'Generating key...' + bcolors.ENDC)
     username = input("Username: ")
     password = getpass()
+    tokenName = input("Token Name [default]: ")
     OTP = input("OTP [leave blank if OTP is not enabled]: ")
     # print(username)
     # print(password)
@@ -19,6 +20,8 @@ def generateKey():
     header.update({"Content-Type":"application/x-www-form-urlencoded"})
     data={'username':username}
     data.update({'password':password})
+    if tokenName != "":
+        data.update({'name':tokenName})
     if OTP != "":
         header.update({"Fastly-OTP":OTP})
     r=requests.post("https://api.fastly.com/tokens",headers=header,data=data)
