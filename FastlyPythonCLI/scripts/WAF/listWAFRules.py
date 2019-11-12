@@ -18,6 +18,7 @@ def listWAFRules():
                 df['Description'] = df['attributes.message']
                 df['Severity'] = df['attributes.severity']
             pandas.set_option('display.max_colwidth', -1)
+            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
             print(df)
             input("Press ENTER to continue...")
         else:

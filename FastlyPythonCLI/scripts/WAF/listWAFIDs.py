@@ -4,7 +4,7 @@ import pandas
 from pandas.io.json import json_normalize
 
 def listWAFIDs():
-    print("This takes a while, querying each service for WAF status...")
+    print("This may take a while. Querying each service for WAF status...")
     pandas.set_option('display.max_rows', 1000)
     if scripts.checkAPINoPrint():
         services = scripts.listServicesNoPrint()
@@ -36,6 +36,8 @@ def listWAFIDs():
                         dfObj = dfObj.append(df)
                 else:
                     input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
+            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF IDs" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
+            pandas.set_option('display.max_colwidth', -1)
             print(dfObj)
             input("Press ENTER to continue...")
             return dfObj

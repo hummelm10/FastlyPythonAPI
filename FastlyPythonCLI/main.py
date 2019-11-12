@@ -4,6 +4,7 @@ import requests
 import shutil
 import time
 import signal
+import pandas
 
 #import custom 
 import scripts
@@ -17,6 +18,8 @@ def handler(signum, frame):
 flag = True #loop control
 columns = shutil.get_terminal_size().columns
 signal.signal(signal.SIGINT, handler)
+pandas.set_option('display.max_colwidth', -1)
+pandas.set_option('display.max_rows', 1000)
 
 if __name__ == "__main__":
     scripts.clear()

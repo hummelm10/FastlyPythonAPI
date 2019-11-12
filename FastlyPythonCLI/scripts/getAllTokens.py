@@ -35,6 +35,7 @@ def getAllTokens(printInput=True):
             df['Last Used At'] = df['last_used_at']
             df['Expiration'] = df['expires_at']
             df['IP'] = df['ip']
+        print(bcolors.OKBLUE + bcolors.UNDERLINE + "FASTLY CURRENT API KEYS" + bcolors.ENDC + bcolors.ENDC)
         print(df)
         if printInput:
             input("Press ENTER to continue...")

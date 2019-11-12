@@ -1,7 +1,6 @@
 #Imports
 from getpass import getpass
 from .utils import clear
-from .utils import writeKeyToXML
 from .utils import bcolors
 from xml.dom import minidom
 import requests

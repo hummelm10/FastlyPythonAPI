@@ -39,11 +39,9 @@ def getKeyFromConfig():
     items = configXML.getElementsByTagName('item')
     return str(items[0].childNodes[0].data)
 
-def writeKeyToXML(key):
-    print("Do something here")
-
 def listServices():
     if scripts.checkAPINoPrint():
+        print("This may take a while. Enumerating services...")
         header={"Accept":"application/json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
         r=requests.get("https://api.fastly.com/service",headers=header)
@@ -68,6 +66,7 @@ def listServices():
                         returnlist = returns['name'].tolist()
                         df.at[x,'Domain(s)'] =", ".join(returnlist)
             pandas.set_option('display.max_colwidth', -1)
+            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY SERVICES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
             print(df)
             input("Press ENTER to continue...")
         else:
@@ -77,6 +76,7 @@ def listServices():
 
 def listServicesNoPrint():
     if scripts.checkAPINoPrint():
+        print("This may take a while. Enumerating services...")
         header={"Accept":"application/json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
         r=requests.get("https://api.fastly.com/service",headers=header)
