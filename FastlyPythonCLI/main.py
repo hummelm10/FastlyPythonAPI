@@ -43,10 +43,11 @@ if __name__ == "__main__":
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print('1: Check API Key')
         print('2: Login/Generate API Key')
-        print('3: List all active API Keys')
-        print('4: List all Services')
-        print('5: WAF')
-        print('6: CDN')
+        print('3: Revoke API Key')
+        print('4: List all active API Keys')
+        print('5: List all Services')
+        print('6: WAF')
+        print('7: CDN')
         print('Q to quit')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
@@ -60,14 +61,17 @@ if __name__ == "__main__":
             scripts.generateKey()
         elif choice == '3':
             scripts.clear()
-            scripts.getAllTokens()
+            scripts.revokeKey()    
         elif choice == '4':
             scripts.clear()
-            scripts.listServices()
+            scripts.getAllTokens()
         elif choice == '5':
             scripts.clear()
-            scripts.WAFMenu()
+            scripts.listServices()
         elif choice == '6':
+            scripts.clear()
+            scripts.WAFMenu()
+        elif choice == '7':
             scripts.clear()
             scripts.CDNMenu()
         elif choice == 'Q' or choice == 'q':

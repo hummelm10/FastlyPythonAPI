@@ -26,7 +26,7 @@ def checkAPI():
     elif r.status_code == 200:
         input("API Key appears valid. Press ENTER to continue...")
     else:
-        print(bcolors.WARNING + "Unknown Response: " + r.status_code + bcolors.ENDC)
+        print(bcolors.WARNING + "Unknown Response: " + str(r.status_code) + bcolors.ENDC)
         input("Press ENTER to continue...")
         exit()
     return

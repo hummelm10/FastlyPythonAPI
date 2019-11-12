@@ -4,6 +4,7 @@ import pandas
 from pandas.io.json import json_normalize
 
 def listWAFIDs():
+    print("This takes a while, querying each service for WAF status...")
     pandas.set_option('display.max_rows', 1000)
     if scripts.checkAPINoPrint():
         services = scripts.listServicesNoPrint()
@@ -45,6 +46,7 @@ def listWAFIDs():
     return None
 
 def listWAFIDsNoPrompt():
+    print("This takes a while, querying each service for WAF status...")
     pandas.set_option('display.max_rows', 1000)
     if scripts.checkAPINoPrint():
         services = scripts.listServicesNoPrint()

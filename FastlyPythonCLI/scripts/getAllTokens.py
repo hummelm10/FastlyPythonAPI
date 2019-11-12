@@ -14,7 +14,7 @@ import pandas
 from pandas.io.json import json_normalize
 
 
-def getAllTokens():
+def getAllTokens(printInput=True):
     print('Getting all current tokens...')
     print("API Key: " + getKeyFromConfig())
     header={"Accept":"application/json"}
@@ -36,9 +36,12 @@ def getAllTokens():
             df['Expiration'] = df['expires_at']
             df['IP'] = df['ip']
         print(df)
-        input("Press ENTER to continue...")
+        if printInput:
+            input("Press ENTER to continue...")
+        else:
+            return df
     else:
-        print(bcolors.WARNING + "Unknown Response: " + r.status_code + bcolors.ENDC)
+        print(bcolors.WARNING + "Unknown Response: " + str(r.status_code) + bcolors.ENDC)
         input("Press ENTER to continue...")
         exit()
     return
