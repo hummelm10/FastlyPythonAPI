@@ -29,17 +29,36 @@ def purgeKeyMenu():
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
-            return
-        scripts.clear()
-        purgeKeyMenu()
-    service = df['ID'].iloc(sernumber)
-    key = input("Enter key to purge: ")
+            scripts.clear()
+            purgeMenu()
+    print(str(df.iloc[sernumber]))
     while "Not a valid response.":
-        reply = str(input("Soft purge [Y/n]")).lower().strip()
+        reply = str(input("Correct service [Y/n]: ")).lower().strip()
+        if reply == 'y':
+            service = str(df['ID'].iloc[sernumber])
+            break
+        if reply == 'n':
+            scripts.clear()
+            purgeKeyMenu()
+            break
+    key = str(input("Enter key to purge: "))
+    print("Key: " + str(key))
+    while "Not a valid response.":
+        reply = str(input("Correct key [Y/n]: ")).lower().strip()
+        if reply[0] == 'y':
+            break
+        if reply[0] == 'n':
+            scripts.clear()
+            purgeKeyMenu()
+            break
+    while "Not a valid response.":
+        reply = str(input("Soft purge [Y/n]: ")).lower().strip()
         if reply[0] == 'y':
             purgeKey(service, key, True)
+            break
         if reply[0] == 'n':
             purgeKey(service, key, False)
+            break
 
 def purgeService(service):
     if scripts.checkAPINoPrint():
@@ -65,11 +84,19 @@ def purgeServiceMenu():
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
-            return
-        scripts.clear()
-        purgeKeyMenu()
-    service = df['ID'].iloc(sernumber)
-    purgeService(str(service))
+            scripts.clear()
+            purgeMenu()
+    print(str(df.iloc[sernumber]))
+    while "Not a valid response.":
+        reply = str(input("Correct service [Y/n]: ")).lower().strip()
+        if reply == 'y':
+            service = str(df['ID'].iloc[sernumber])
+            purgeService(str(service))
+            break
+        elif reply == 'n':
+            scripts.clear()
+            purgeKeyMenu()
+            break
 
 def purgeURL(url):
     if scripts.checkAPINoPrint():
