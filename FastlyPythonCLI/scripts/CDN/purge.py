@@ -25,7 +25,7 @@ def purgeKeyMenu():
     df = scripts.listServicesNoPrint()
     print(df)
     try:
-        sernumber = int(input("\n\nEnter service to purge: "))
+        sernumber = int(input("\n\nEnter index of service to purge: "))
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
@@ -61,7 +61,7 @@ def purgeServiceMenu():
     df = scripts.listServicesNoPrint()
     print(df)
     try:
-        sernumber = int(input("\n\nEnter service to purge: "))
+        sernumber = int(input("\n\nEnter index of service to purge: "))
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
