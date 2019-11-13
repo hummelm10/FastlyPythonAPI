@@ -8,9 +8,9 @@ def WAFMenu():
         #Display menu options 
         print('  ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'WAF MENU' + scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
-        print('1: List WAF Rules')
+        print('1: List/Search WAF Rules')
         print('2: List WAF IDs')
-        print('3: List Single WAF Ruleset')
+        print('3: List Individual WAF Ruleset')
         print('B to go back')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')

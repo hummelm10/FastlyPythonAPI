@@ -27,7 +27,9 @@ def purgeKeyMenu():
     try:
         sernumber = int(input("\n\nEnter service to purge: "))
     except:
-        input("Not a valid number. Press enter to continue...")
+        e = input("Not a valid number. Press enter to continue or E to exit...")
+        if e.lower() == 'e':
+            return
         scripts.clear()
         purgeKeyMenu()
     service = df['ID'].iloc(sernumber)
@@ -61,7 +63,9 @@ def purgeServiceMenu():
     try:
         sernumber = int(input("\n\nEnter service to purge: "))
     except:
-        input("Not a valid number. Press enter to continue...")
+        e = input("Not a valid number. Press enter to continue or E to exit...")
+        if e.lower() == 'e':
+            return
         scripts.clear()
         purgeKeyMenu()
     service = df['ID'].iloc(sernumber)

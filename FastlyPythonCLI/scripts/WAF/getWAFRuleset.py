@@ -6,6 +6,7 @@ from pandas.io.json import json_normalize
 from .listWAFIDs import listWAFIDs
 from .listWAFIDs import listWAFIDsNoPrompt
 from .getRuleByID import getRuleByID
+import pydoc
 
 def getWAFRuleset():
     pandas.set_option('display.max_rows', 1000)
@@ -15,35 +16,51 @@ def getWAFRuleset():
         try:
             inVar = int(input("\n\nPlease select which WAF to display: "))
         except:
-            input("Not a valid number. Press enter to continue...")
+            e = input("Not a valid number. Press enter to continue or E to exit...")
+            if e.lower() == 'e':
+                return
             scripts.clear()
             getWAFRuleset()
         header={"Accept":"application/vnd.api+json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
         # input("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/ruleset")
         r=requests.get("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rule_statuses",headers=header)
-        if r.status_code == 401:
-            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
-        elif r.status_code == 404:
-            # * no waf for that service
-            pass
-        elif r.status_code == 200:
-            with scripts.utils.DataFrameFromDict(r.json()['data']) as df:
-                df['ID'] = df['attributes.unique_rule_id']
-                df['Status'] = df['attributes.status']
-                # df['Rule ID'] = df['rule.data.id']
-                # df['Type'] = df['rule.data.type']
-            df.insert(2, 'Severity', None)
-            df.insert(3, 'Description', None)
-            for x in range(len(df.index)):
-                obj = getRuleByID(str(df['ID'].iloc[x]))
-                #print(obj)
-                df.at[x,'Severity'] = obj['Severity'].iloc[0]
-                df.at[x,'Description'] = obj['Description'].iloc[0]
-            pandas.set_option('display.max_colwidth', -1)
-            print(df)
-            input("Press ENTER to continue...")
+        pages=int(json_normalize(r.json()['meta'])['total_pages'])
+        df_all_rows = pandas.DataFrame()
+        for x in range(pages):
+            x+=1
+            print("Parsing page " + str(x) + " of " + str(pages) + " total pages")
+            r=requests.get("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rule_statuses?page[number]=" + str(x),headers=header)
+            if r.status_code == 401:
+                input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
+            elif r.status_code == 404:
+                # * no waf for that service
+                pass
+            elif r.status_code == 200:
+                with scripts.utils.DataFrameFromDict(r.json()['data']) as df:
+                    df['ID'] = df['attributes.unique_rule_id']
+                    df['Status'] = df['attributes.status']
+                df.insert(2, 'Severity', None)
+                df.insert(3, 'Description', None)
+                if x == 0:
+                    df_all_rows = df
+                for x in range(len(df.index)):
+                    obj = getRuleByID(str(df['ID'].iloc[x]))
+                    df.at[x,'Severity'] = obj['Severity'].iloc[0]
+                    df.at[x,'Description'] = obj['Description'].iloc[0]
+                pandas.set_option('display.max_colwidth', -1)
+                df_all_rows = df_all_rows.append(df,ignore_index = True)
+            else:
+                input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
+                break
+        filter = input("Enter filter for rules [all]: ")
+        if filter != "":
+            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
+            mask = df_all_rows.apply(lambda row: row.astype(str).str.contains(str(filter), case=False, na=False, regex=False).any(), axis=1)
+            pydoc.pager(str(df_all_rows[mask]))
         else:
-            input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
+            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
+            pydoc.pager(str(df_all_rows))
+        input("Press ENTER to return to menu...")
     else:
         input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)

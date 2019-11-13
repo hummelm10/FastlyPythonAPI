@@ -44,13 +44,13 @@ if __name__ == "__main__":
         print(' ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'MAIN MENU' + \
             scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
-        print('1: Check API Key')
-        print('2: Login/Generate API Key')
-        print('3: Revoke API Key')
-        print('4: List all active API Keys')
-        print('5: List all Services')
-        print('6: WAF')
-        print('7: CDN')
+        print('1: WAF')
+        print('2: CDN')
+        print('3: List Services')
+        print('4: Check API Key')
+        print('5: Generate API Key')
+        print('6: List API Keys')
+        print('0: Revoke API Key')
         print('Q to quit')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
@@ -58,25 +58,25 @@ if __name__ == "__main__":
 
         if choice == '1':
             scripts.clear()
-            scripts.checkAPI()
+            scripts.WAFMenu()
         elif choice == '2':
             scripts.clear()
-            scripts.generateKey()
+            scripts.CDNMenu()
         elif choice == '3':
             scripts.clear()
-            scripts.revokeKey()    
+            scripts.listServices()
         elif choice == '4':
             scripts.clear()
-            scripts.getAllTokens()
+            scripts.checkAPI()
         elif choice == '5':
             scripts.clear()
-            scripts.listServices()
+            scripts.generateKey()    
         elif choice == '6':
             scripts.clear()
-            scripts.WAFMenu()
-        elif choice == '7':
+            scripts.getAllTokens()
+        elif choice == '0':
             scripts.clear()
-            scripts.CDNMenu()
+            scripts.revokeKey()
         elif choice == 'Q' or choice == 'q':
             flag = False
         else:
