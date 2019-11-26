@@ -27,6 +27,7 @@ def listWAFRules():
                     df['Severity'] = df['attributes.severity']
                 pandas.set_option('display.max_colwidth', -1)
                 df_all_rows = df_all_rows.append(df, ignore_index=True)
+                df_all_rows.reset_index(drop=True, inplace=True)
             filter = input("Enter filter for rules [all]: ")
             if filter != "":
                 print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)

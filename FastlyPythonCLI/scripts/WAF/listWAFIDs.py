@@ -25,7 +25,9 @@ def listWAFIDs():
                         if df.empty != True:
                             df.insert(0, 'Name', str(services['Name'].iloc[x]))
                             df.insert(1, 'Service ID', str(services['ID'].iloc[x]))
-                            df.insert(2, 'Domain(s)', str(services['Domain(s)'].iloc[x]))
+                            # ! took out domains since it made the print out wider than the console and messed up formatting
+                            # df.insert(2, 'Domain(s)', str(services['Domain(s)'].iloc[x]))
+                            # df['Domain(s)'] = df['Domain(s)'].str.wrap(40)
                             df['WAF ID'] = df['id']
                             df['Version'] = df['attributes.version']
                             df['Last Push'] = df['attributes.last_push']
@@ -33,12 +35,13 @@ def listWAFIDs():
                             df['Blocked Rules'] = df['attributes.rule_statuses_block_count']
                             df['Disabled Rules'] = df['attributes.rule_statuses_disabled_count']
                     if df.empty != True:
-                        dfObj = dfObj.append(df)
+                        dfObj = dfObj.append(df, ignore_index=True)
                 else:
                     input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
             print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF IDs" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
             pandas.set_option('display.max_colwidth', -1)
-            print(dfObj)
+            dfObj.reset_index(drop=True, inplace=True)
+            print(dfObj, flush=True)
             input("Press ENTER to continue...")
             return dfObj
         else:
@@ -70,7 +73,9 @@ def listWAFIDsNoPrompt():
                             if df.empty != True:
                                 df.insert(0, 'Name', str(services['Name'].iloc[x]))
                                 df.insert(1, 'Service ID', str(services['ID'].iloc[x]))
-                                df.insert(2, 'Domain(s)', str(services['Domain(s)'].iloc[x]))
+                                # ! took out domains since it made the print out wider than the console and messed up formatting
+                                # df.insert(2, 'Domain(s)', str(services['Domain(s)'].iloc[x]))
+                                # df['Domain(s)'] = df['Domain(s)'].str.wrap(40)
                                 df['WAF ID'] = df['id']
                                 df['Version'] = df['attributes.version']
                                 df['Last Push'] = df['attributes.last_push']
@@ -78,10 +83,11 @@ def listWAFIDsNoPrompt():
                                 df['Blocked Rules'] = df['attributes.rule_statuses_block_count']
                                 df['Disabled Rules'] = df['attributes.rule_statuses_disabled_count']
                         if df.empty != True:
-                            dfObj = dfObj.append(df)
+                            dfObj = dfObj.append(df, ignore_index=True)
                     else:
                         input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
-            print(dfObj)
+            dfObj.reset_index(drop=True, inplace=True)
+            print(dfObj, flush=True)
             return dfObj
         else:
             input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)

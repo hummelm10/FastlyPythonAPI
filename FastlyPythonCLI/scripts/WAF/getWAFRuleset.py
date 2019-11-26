@@ -50,6 +50,7 @@ def getWAFRuleset():
                     df.at[x,'Description'] = obj['Description'].iloc[0]
                 pandas.set_option('display.max_colwidth', -1)
                 df_all_rows = df_all_rows.append(df,ignore_index = True)
+                df_all_rows.reset_index()
             else:
                 input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
                 break
