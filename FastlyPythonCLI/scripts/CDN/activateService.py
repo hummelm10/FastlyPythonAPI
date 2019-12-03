@@ -39,7 +39,13 @@ def activateService():
             input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
         elif r.status_code == 200:
             pprint.pprint(r.json())
-            input('Press ENTER to continue...')
+            while "Not a valid response.":
+                reply = str(input("Activate another service [Y/n]: ")).lower().strip()
+                if reply == 'y':
+                    scripts.clear()
+                    activateService()
+                if reply == 'n':
+                    break
         else:
             input(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) +  "\nPress ENTER to continue..." + scripts.bcolors.ENDC)
     else:
