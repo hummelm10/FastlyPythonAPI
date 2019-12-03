@@ -30,6 +30,7 @@ def listWAFIDs():
                             # df['Domain(s)'] = df['Domain(s)'].str.wrap(40)
                             df['WAF ID'] = df['id']
                             df['Version'] = df['attributes.version']
+                            df['Disabled'] = df['attributes.disabled']
                             df['Last Push'] = df['attributes.last_push']
                             df['Logged Rules'] = df['attributes.rule_statuses_log_count']
                             df['Blocked Rules'] = df['attributes.rule_statuses_block_count']
@@ -78,6 +79,7 @@ def listWAFIDsNoPrompt():
                                 # df['Domain(s)'] = df['Domain(s)'].str.wrap(40)
                                 df['WAF ID'] = df['id']
                                 df['Version'] = df['attributes.version']
+                                df['Disabled'] = df['attributes.disabled']
                                 df['Last Push'] = df['attributes.last_push']
                                 df['Logged Rules'] = df['attributes.rule_statuses_log_count']
                                 df['Blocked Rules'] = df['attributes.rule_statuses_block_count']
