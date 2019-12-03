@@ -10,6 +10,7 @@ def CDNMenu():
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print('1: List Public IPs')
         print('2: Purge Options')
+        print('3: Activate Service')
         print('B to go back')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
@@ -18,9 +19,12 @@ def CDNMenu():
         if choice == '1':
             scripts.clear()
             scripts.CDN.listPublicIPs()
-        if choice == '2':
+        elif choice == '2':
             scripts.clear()
             scripts.CDN.purgeMenu()
+        elif choice == '3':
+            scripts.clear()
+            scripts.CDN.activateService()
         elif choice == 'B' or choice == 'b':
             flag = False
         else:
