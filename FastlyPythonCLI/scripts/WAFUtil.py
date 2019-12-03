@@ -12,6 +12,8 @@ def WAFMenu():
         print('2: List WAF IDs')
         print('3: List Service Active WAF Rules')
         print('4: OWASP')
+        print('911d: Disable WAF - EMERGENCY ONLY')
+        print('911e: Enable WAF - EMERGENCY ONLY')
         print('B to go back')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
@@ -29,6 +31,12 @@ def WAFMenu():
         elif choice == '4':
             scripts.clear()
             scripts.WAF.OWASP()
+        elif choice == '911d':
+            scripts.clear()
+            scripts.WAF.disableWAF()
+        elif choice == '911e':
+            scripts.clear()
+            scripts.WAF.enableWAF()
         elif choice == 'B' or choice == 'b':
             flag = False
         else:
