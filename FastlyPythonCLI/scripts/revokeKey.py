@@ -9,6 +9,7 @@ def revokeKey():
     df = getAllTokens(False)
     try:
         revokeTokenIndex = int(input("Enter index of token to revoke: "))
+        revokeTokenID = df['ID'].iloc[revokeTokenIndex]
     except:
         input("Not a valid number. Press enter to continue...")
         clear()
@@ -16,7 +17,6 @@ def revokeKey():
     header={"Accept":"application/json"}
     header.update({"Fastly-Key":getKeyFromConfig()})
     # print(df)
-    revokeTokenID = df['ID'].iloc[revokeTokenIndex]
     # print(str(revokeTokenID))
     r=requests.delete("https://api.fastly.com/tokens/"+str(revokeTokenID),headers=header)
     if r.status_code == 401:

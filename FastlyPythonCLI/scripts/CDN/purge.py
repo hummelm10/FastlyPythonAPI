@@ -81,12 +81,12 @@ def purgeServiceMenu():
     print(df)
     try:
         sernumber = int(input("\n\nEnter index of service to purge: "))
+        print(str(df.iloc[sernumber]))
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
             scripts.clear()
             purgeMenu()
-    print(str(df.iloc[sernumber]))
     while "Not a valid response.":
         reply = str(input("Correct service [Y/n]: ")).lower().strip()
         if reply == 'y':
@@ -147,6 +147,6 @@ def purgeMenu():
                 purgeMenu()
             purgeURL(url)
         elif choice == 'B' or choice == 'b':
-            flag = False
+            scripts.CDNMenu()
         else:
             input('Not a valid choice. Hit enter to continue...')

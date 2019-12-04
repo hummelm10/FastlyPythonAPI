@@ -38,6 +38,6 @@ def WAFMenu():
             scripts.clear()
             scripts.WAF.enableWAF()
         elif choice == 'B' or choice == 'b':
-            flag = False
+            scripts.mainMenu()
         else:
             input('Not a valid choice. Hit enter to continue...')

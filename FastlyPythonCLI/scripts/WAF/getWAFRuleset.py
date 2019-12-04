@@ -15,6 +15,7 @@ def getWAFRuleset():
         # print(dfObj)
         try:
             inVar = int(input("\n\nEnter index of WAF to display: "))
+            print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rule_statuses")
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
             if e.lower() == 'e':

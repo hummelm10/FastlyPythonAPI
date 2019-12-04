@@ -10,6 +10,7 @@ def disableWAF():
         dfObj = listWAFIDsNoPrompt()
         try:
             inVar = int(input("\n\nEnter index of WAF to display [Enter to exit]: "))
+            print(str(dfObj['WAF ID'].iloc[inVar]))
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
             if e.lower() == 'e':
@@ -44,6 +45,7 @@ def enableWAF():
         dfObj = listWAFIDsNoPrompt()
         try:
             inVar = int(input("\n\nEnter index of WAF to display: "))
+            str(dfObj['WAF ID'].iloc[inVar])
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
             if e.lower() == 'e':

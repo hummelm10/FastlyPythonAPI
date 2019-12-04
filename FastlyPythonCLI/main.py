@@ -38,48 +38,6 @@ if __name__ == "__main__":
     scripts.clear()
     print('Checking if saved API Key is valid...')
     scripts.checkAPI()
-    while flag == True:
-        scripts.clear()
-        #Display menu options 
-        print(' ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'MAIN MENU' + \
-            scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
-        print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
-        print('1: WAF')
-        print('2: CDN')
-        print('3: List Services')
-        print('4: Check API Key')
-        print('5: Generate API Key')
-        print('6: List API Keys')
-        print('0: Revoke API Key')
-        print('Q to quit')
-        print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
-        print(' ')
-        choice = input('Option: ')     #get user's choice
-
-        if choice == '1':
-            scripts.clear()
-            scripts.WAFMenu()
-        elif choice == '2':
-            scripts.clear()
-            scripts.CDNMenu()
-        elif choice == '3':
-            scripts.clear()
-            scripts.listServices()
-        elif choice == '4':
-            scripts.clear()
-            scripts.checkAPI()
-        elif choice == '5':
-            scripts.clear()
-            scripts.generateKey()    
-        elif choice == '6':
-            scripts.clear()
-            scripts.getAllTokens()
-        elif choice == '0':
-            scripts.clear()
-            scripts.revokeKey()
-        elif choice == 'Q' or choice == 'q':
-            flag = False
-        else:
-            input('Not a valid choice. Hit enter to continue...')
+    scripts.mainMenu()
 
     print('Program ending.')

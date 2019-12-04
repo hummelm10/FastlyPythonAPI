@@ -15,6 +15,7 @@ def OWASP():
         # print(dfObj)
         try:
             inVar = int(input("\n\nEnter index of WAF to display: "))
+            print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/owasp")
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
             if e.lower() == 'e':

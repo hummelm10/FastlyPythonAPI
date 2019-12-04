@@ -26,6 +26,6 @@ def CDNMenu():
             scripts.clear()
             scripts.CDN.activateService()
         elif choice == 'B' or choice == 'b':
-            flag = False
+            scripts.mainMenu()
         else:
             input('Not a valid choice. Hit enter to continue...')
