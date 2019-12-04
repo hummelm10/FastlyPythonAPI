@@ -53,7 +53,7 @@ def listServices():
                 df['ID'] = df['id']
                 df['Name'] = df['name']
                 df['Version'] = df['version']
-            df.insert(3, 'Domain(s)', None)
+            df.insert(4, 'Domain(s)', None)
             # print(df)
             for x in range(len(df.index)):
                 if not df['Version'].isnull().iloc[x]:
@@ -64,7 +64,7 @@ def listServices():
                     returns=json_normalize(r2.json())
                     if r2.json():
                         returnlist = returns['name'].tolist()
-                        df.at[x,'Domain(s)'] =", ".join(returnlist)
+                        df.at[x,'Domain(s)'] = ", ".join(returnlist)
             pandas.set_option('display.max_colwidth', -1)
             print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY SERVICES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
             print(df)
