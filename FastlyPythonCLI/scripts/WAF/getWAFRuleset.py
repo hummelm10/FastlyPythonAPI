@@ -39,6 +39,8 @@ def getWAFRuleset():
                 pass
             elif r.status_code == 200:
                 with scripts.utils.DataFrameFromDict(r.json()['data']) as df:
+                    df['Rule ID'] = df['id']
+                    df['Num ID'] = df['attributes.modsec_rule_id']
                     df['ID'] = df['attributes.unique_rule_id']
                     df['Status'] = df['attributes.status']
                 df.insert(2, 'Severity', None)
@@ -57,12 +59,47 @@ def getWAFRuleset():
                 break
         filter = input("Enter filter for rules [all]: ")
         if filter != "":
-            print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
-            mask = df_all_rows.apply(lambda row: row.astype(str).str.contains(str(filter), case=False, na=False, regex=False).any(), axis=1)
-            pydoc.pager(str(df_all_rows[mask]))
+            try:
+                mask = df_all_rows.apply(lambda row: row.astype(int).str.contains(int(filter), case=False, na=False, regex=False).any(), axis=1)
+                print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
+                pydoc.pager(str(df_all_rows[mask]))
+            except:
+                mask = df_all_rows.apply(lambda row: row.astype(str).str.contains(str(filter), case=False, na=False, regex=False).any(), axis=1)
+                print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
+                pydoc.pager(str(df_all_rows[mask]))
         else:
             print(scripts.bcolors.OKBLUE + scripts.bcolors.UNDERLINE + "FASTLY WAF RULES" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
             pydoc.pager(str(df_all_rows))
-        input("Press ENTER to return to menu...")
+        while "Not a valid response.":
+            reply = str(input("Modify filtered rules [Y/n]: ")).lower().strip()
+            if reply == 'y':
+                action = str(input("Enter action to perform on rules (disabled, log, block):")).lower().strip()
+                body = {}
+                datatemp = {}
+                attributes = {}
+                dfFiltered = df_all_rows[mask]
+                for index, row in dfFiltered.iterrows():
+                    print(str(row['Rule ID']))
+                    datatemp.update({"id":str(row['Rule ID'])})
+                    datatemp.update({"type":"rule_status"})
+                    attributes.update({"status":action})
+                    datatemp.update({"attributes":attributes})
+                    body.update({"data":datatemp})
+                    #print(json.dumps(data))
+                    header={"Accept":"application/vnd.api+json"}
+                    header.update({"Fastly-Key":scripts.getKeyFromConfig()})
+                    #r=requests.get("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(rid) + "/rule_status",headers=header)
+                    #pprint.pprint(r.json()['data'])
+                    header.update({"Content-Type":"application/vnd.api+json"})
+                    #print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(rid) + "/rule_status")
+                    r=requests.patch("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(row['ID']) + "/rule_status", data=body ,headers=header)
+                    if r.status_code == 200:
+                        pprint.pprint(r.json()['data'])
+                    else:
+                        print(scripts.bcolors.WARNING + "Error with services request.\nStatus: " + str(r.status_code) + scripts.bcolors.ENDC)
+                break
+            if reply == 'n':
+                scripts.WAFMenu()
+        input("Press ENTER to continue...")
     else:
         input(scripts.bcolors.WARNING + "Error with API Key, generate a new one. Press ENTER to continue..." + scripts.bcolors.ENDC)

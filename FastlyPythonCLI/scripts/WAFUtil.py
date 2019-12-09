@@ -8,10 +8,11 @@ def WAFMenu():
         #Display menu options 
         print('  ' + scripts.bcolors.BOLD + scripts.bcolors.UNDERLINE + scripts.bcolors.HEADER + 'WAF MENU' + scripts.bcolors.ENDC + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
-        print('1: List/Search WAF Rules')
+        print('1: List/Search All WAF Rules')
         print('2: List WAF IDs')
-        print('3: List Service Active WAF Rules')
-        print('4: OWASP')
+        print('3: List/Modify WAF Config')
+        print('4: List OWASP Config')
+        print('5: Modify WAF Rules')
         print('911d: Disable WAF - EMERGENCY ONLY')
         print('911e: Enable WAF - EMERGENCY ONLY')
         print('B to go back')
@@ -31,6 +32,9 @@ def WAFMenu():
         elif choice == '4':
             scripts.clear()
             scripts.WAF.OWASP()
+        elif choice == '5':
+            scripts.clear()
+            scripts.WAF.modifyRules()
         elif choice == '911d':
             scripts.clear()
             scripts.WAF.disableWAF()
