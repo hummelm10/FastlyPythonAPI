@@ -2,6 +2,7 @@ import requests
 import scripts
 import pprint
 import pandas
+import json
 from pandas.io.json import json_normalize
 from .listWAFIDs import listWAFIDs
 from .listWAFIDs import listWAFIDsNoPrompt
@@ -88,11 +89,14 @@ def getWAFRuleset():
                     #print(json.dumps(data))
                     header={"Accept":"application/vnd.api+json"}
                     header.update({"Fastly-Key":scripts.getKeyFromConfig()})
+                   
                     #r=requests.get("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(rid) + "/rule_status",headers=header)
                     #pprint.pprint(r.json()['data'])
                     header.update({"Content-Type":"application/vnd.api+json"})
-                    #print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(rid) + "/rule_status")
-                    r=requests.patch("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(row['ID']) + "/rule_status", data=body ,headers=header)
+                    #print(json.dumps(header))
+                    #print(json.dumps(body))
+                    #print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(row['Num ID']) + "/rule_status")
+                    r=requests.patch("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rules/" + str(row['Num ID']) + "/rule_status", data=str(json.dumps(body)) ,headers=header)
                     if r.status_code == 200:
                         pprint.pprint(r.json()['data'])
                     else:
