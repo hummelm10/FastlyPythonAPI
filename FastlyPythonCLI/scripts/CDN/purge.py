@@ -103,7 +103,15 @@ def purgeURL(url):
         header={"Accept":"application/json"}
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})
         header.update({"Fastly-Soft-Purge":"1"})
-        input("Purge URL: " + str(url) + "\nPress Enter to continue...")
+        url = str(input("Purge URL: "))
+        while "Not a valid response.":
+            reply = str(input("Correct URL [Y/n]: ")).lower().strip()
+            if reply == 'y':
+                break
+            elif reply == 'n':
+                scripts.clear()
+                purgeURL()
+                break
         r=requests.request("PURGE", str(url), headers=header)
         if r.status_code == 401:
             input(scripts.bcolors.WARNING + "Error with request. Press ENTER to continue..." + scripts.bcolors.ENDC)
