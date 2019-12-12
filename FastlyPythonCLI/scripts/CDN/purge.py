@@ -110,7 +110,7 @@ def purgeURL(url):
                 break
             elif reply == 'n':
                 scripts.clear()
-                purgeURL()
+                purgeMenu()
                 break
         r=requests.request("PURGE", str(url), headers=header)
         if r.status_code == 401:
