@@ -128,7 +128,7 @@ def getDetails(df):
         e = input("Not a valid number. Press enter to continue or E to exit...")
         if e.lower() == 'e':
             clear()
-            listServices()
+            mainMenu()
     header={"Accept":"application/json"}
     header.update({"Fastly-Key":scripts.getKeyFromConfig()})
     r=requests.get("https://api.fastly.com/service/" + str(df['ID'].iloc[inVar]) + "/details",headers=header)
