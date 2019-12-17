@@ -137,7 +137,7 @@ def purgeMenu():
         print('B to go back')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
-        choice = input('Option: ')     #get user's choice
+        choice = input('Option: ').strip(' ')     #get user's choice
 
         if choice == '1':
             scripts.clear()
@@ -154,7 +154,7 @@ def purgeMenu():
                 scripts.clear()
                 purgeMenu()
             purgeURL(url)
-        elif choice == 'B' or choice == 'b':
+        elif choice.strip(' ') == 'B' or choice.strip(' ') == 'b':
             scripts.CDNMenu()
         else:
             input('Not a valid choice. Hit enter to continue...')

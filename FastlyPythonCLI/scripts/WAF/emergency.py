@@ -13,8 +13,9 @@ def disableWAF():
             print(str(dfObj['WAF ID'].iloc[inVar]))
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
-            if e.lower() == 'e':
-                return
+            if e.strip(' ').lower() == 'e':
+                scripts.clear()
+                scripts.WAFMenu()
             scripts.clear()
             disableWAF()
         print(scripts.bcolors.WARNING + scripts.bcolors.UNDERLINE + "EMERGENCY DISABLE: THIS IS TO BE USED IN AN EMERGENCY ONLY" + scripts.bcolors.ENDC + scripts.bcolors.ENDC)
@@ -48,10 +49,11 @@ def enableWAF():
             str(dfObj['WAF ID'].iloc[inVar])
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
-            if e.lower() == 'e':
-                return
+            if e.strip(' ').lower() == 'e':
+                scripts.clear()
+                scripts.WAFMenu()
             scripts.clear()
-            disableWAF()
+            enableWAF()
         header={"Accept":"application/vnd.api+json"}
         header.update({"Content-Type":"application/vnd.api+json"})
         header.update({"Fastly-Key":scripts.getKeyFromConfig()})

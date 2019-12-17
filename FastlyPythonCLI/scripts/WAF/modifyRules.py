@@ -14,8 +14,9 @@ def modifyRules():
             inVar = int(input("\n\nEnter index of WAF to modify: "))
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
-            if e.lower() == 'e':
-                return
+            if e.strip(' ').lower() == 'e':
+                scripts.clear()
+                scripts.WAFMenu()
             scripts.clear()
             modifyRules()
         ruleids = str(input("Enter rule ID's to modify (Example: 1010010,931100,931110): ")).lower().strip()

@@ -56,7 +56,7 @@ def mainMenu():
         print('Q to quit')
         print(scripts.bcolors.HEADER + '===========' + scripts.bcolors.ENDC)
         print(' ')
-        choice = input('Option: ')     #get user's choice
+        choice = input('Option: ').strip(' ')     #get user's choice
 
         if choice == '1':
             scripts.clear()
@@ -126,9 +126,11 @@ def getDetails(df):
         print(str(df['ID'].iloc[inVar]))
     except:
         e = input("Not a valid number. Press enter to continue or E to exit...")
-        if e.lower() == 'e':
+        if e.strip(' ').lower() == 'e':
             clear()
             mainMenu()
+        clear()
+        getDetails(df)
     header={"Accept":"application/json"}
     header.update({"Fastly-Key":scripts.getKeyFromConfig()})
     r=requests.get("https://api.fastly.com/service/" + str(df['ID'].iloc[inVar]) + "/details",headers=header)

@@ -19,8 +19,9 @@ def getWAFRuleset():
             print("https://api.fastly.com/service/" + str(dfObj['Service ID'].iloc[inVar]) + "/wafs/" + str(dfObj['WAF ID'].iloc[inVar]) + "/rule_statuses")
         except:
             e = input("Not a valid number. Press enter to continue or E to exit...")
-            if e.lower() == 'e':
-                return
+            if e.strip(' ').lower() == 'e':
+                scripts.clear()
+                scripts.WAFMenu()
             scripts.clear()
             getWAFRuleset()
         header={"Accept":"application/vnd.api+json"}
